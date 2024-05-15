@@ -19,8 +19,28 @@ class Api::V1::ArticlesController < ApplicationController
     render json: article
   end
 
+  def update
+    raise InvalidStatusError unless Article.statuses.keys.include?(create_params[:status])
+
+    article = Article.find(params[:id])
+    category = params[:category_id] ? Category.find(params[:category_id]) : article.category
+
+    article.update!(update_params.merge(category: category))
+    render json: { success: true }
+  end
+
+  def destroy
+    article = Article.find(params[:id])
+    article.destroy!
+    render json: { success: true }
+  end
+
   private
   def create_params
+    params.require(:article).permit(:title, :body, :status, :category_id)
+  end
+
+  def update_params
     params.require(:article).permit(:title, :body, :status, :category_id)
   end
 end
