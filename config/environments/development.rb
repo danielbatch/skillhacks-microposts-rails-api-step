@@ -73,6 +73,13 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
+  config.generators do |g|
+    g.assets false
+    g.helper false
+    g.template_engine nil
+    g.test_framework :rspec
+  end
+
   # Allow requests from our preview domain.
   pf_host = "#{ENV['CODESPACE_NAME']}-3000.#{pf_domain}"
   config.hosts << pf_host
