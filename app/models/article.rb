@@ -6,4 +6,5 @@ class Article < ApplicationRecord
     enum status: { draft: "draft", published: "published" }
     validates :title, presence: true, length: { maximum: TITLE_MAX_LENGTH }
     validates :body, presence: true, length: { maximum: BODY_MAX_LENGTH }
+    validates :status, presence: true
 end
